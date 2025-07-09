@@ -2,7 +2,8 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -35,7 +36,6 @@ public class NotePadApp extends JFrame implements ActionListener {
 
         createMenuBar();
 
-        // Status bar
         statusBar = new JLabel("Words: 0 | Characters: 0");
         statusBar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         add(statusBar, BorderLayout.SOUTH);
@@ -79,6 +79,9 @@ public class NotePadApp extends JFrame implements ActionListener {
 
         JMenu view = new JMenu("View");
         addItem(view, "Toggle Dark Mode");
+        JMenuItem themeItem = new JMenuItem("Switch Theme");
+        themeItem.addActionListener(e -> switchTheme());
+        view.add(themeItem);
 
         menuBar.add(file);
         menuBar.add(edit);
@@ -158,6 +161,16 @@ public class NotePadApp extends JFrame implements ActionListener {
         statusBar.setBackground(bg);
     }
 
+    void switchTheme() {
+        try {
+            UIManager.setLookAndFeel(darkMode ? new FlatMacLightLaf() : new FlatMacDarkLaf());
+            SwingUtilities.updateComponentTreeUI(this);
+            darkMode = !darkMode;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     void updateStatus() {
         String text = textArea.getText();
         int wordCount = (text.trim().isEmpty()) ? 0 : text.trim().split("\\s+").length;
@@ -171,16 +184,13 @@ public class NotePadApp extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         try {
-            // macOS native integration
             if (System.getProperty("os.name").toLowerCase().contains("mac")) {
                 System.setProperty("apple.laf.useScreenMenuBar", "true");
                 System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Notepad");
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } else {
-                UIManager.setLookAndFeel(new NimbusLookAndFeel());
             }
+            UIManager.setLookAndFeel(new FlatMacLightLaf());
         } catch (Exception e) {
-            System.out.println("Look and feel not supported");
+            System.out.println("Look and feel not supported: " + e);
         }
 
         SwingUtilities.invokeLater(() -> new NotePadApp().setVisible(true));
