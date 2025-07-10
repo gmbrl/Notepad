@@ -15,6 +15,12 @@ A lightweight, cross-platform Notepad clone built in Java Swing with a modern ma
 
 ---
 
+## imagespng
+<img src="images/light_theme.png" width="">
+<img src="images/dark_light_theme.png" width="">
+<img src="images/dark_theme.png" width="">
+<img src="images/light_dark_theme.png" width="">
+
 ## 🚀 How to Run
 
 ### 📦 Prerequisites

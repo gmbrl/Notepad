@@ -78,7 +78,7 @@ public class NotePadApp extends JFrame implements ActionListener {
         format.add(fontItem);
 
         JMenu view = new JMenu("View");
-        addItem(view, "Toggle Dark Mode");
+        addItem(view, "Toggle Mode");
         JMenuItem themeItem = new JMenuItem("Switch Theme");
         themeItem.addActionListener(e -> switchTheme());
         view.add(themeItem);
@@ -114,7 +114,7 @@ public class NotePadApp extends JFrame implements ActionListener {
             case "Copy" -> textArea.copy();
             case "Paste" -> textArea.paste();
             case "Select All" -> textArea.selectAll();
-            case "Toggle Dark Mode" -> toggleDarkMode();
+            case "Toggle Mode" -> toggleMode();
             case "Find & Replace" -> new FindReplaceDialog(this, textArea);
         }
     }
@@ -149,7 +149,7 @@ public class NotePadApp extends JFrame implements ActionListener {
         }
     }
 
-    void toggleDarkMode() {
+    void toggleMode() {
         darkMode = !darkMode;
         Color bg = darkMode ? Color.DARK_GRAY : Color.WHITE;
         Color fg = darkMode ? Color.WHITE : Color.DARK_GRAY;
